@@ -102,12 +102,26 @@ const AllNFTs = () => {
           <div className="relative w-24 h-24 mx-auto mb-4">
             <img src={nft.image || "https://avatars3.githubusercontent.com/u/11801238?v=4"} className="h-full w-full rounded-full mx-auto shadow-xl" alt={nft.name} />
           </div>
-          <div className="p-4 h-40 overflow-y-auto"> {/* Adjust this h-40 to the fixed height that suits your design */}
-            <h2 className="font-semibold">Name:{nft.name}</h2>
-            {nft.attributes.map((attr, j) => (
-              <p key={j} className="text-left overflow-ellipsis overflow-hidden">{attr.trait_type}: {attr.value}</p>
-            ))}
-          </div>
+          <div className="p-4 h-40 overflow-y-auto text-lg"> {/* Adjust this h-40 to the fixed height that suits your design */}
+  <p><b>Name:  </b>{nft.name}</p>
+  {nft.attributes.map((attr, j) => {
+    if (attr.trait_type.toLowerCase() === "twitter" && attr.value) {
+      return (
+        <p key={j} className="text-left overflow-ellipsis overflow-hidden">
+          <b>{attr.trait_type}: </b>
+          <a href={`https://twitter.com/${attr.value}`} target="_blank" rel="noopener noreferrer" className="text-blue-500">{attr.value}</a>
+        </p>
+      )
+    } else {
+      return (
+        <p key={j} className="text-left overflow-ellipsis overflow-hidden">
+          <b>{attr.trait_type}: </b> {attr.value}
+        </p>
+      )
+    }
+  })}
+</div>
+
         </div>
       </div> 
     </div>

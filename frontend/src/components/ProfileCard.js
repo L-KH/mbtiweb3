@@ -21,16 +21,30 @@ function ProfileCard() {
   const [quote, setQuote] = useState('');
   const [MBTICard, setMBTICard] = useState(null)
 
+  const [isFormValid, setIsFormValid] = useState(false);  // Add this state
 
-  const personalities = ["Select MBTI type", "INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
+  const personalities = ["Select MBTI type (*)", "INTJ", "INTP", "ENTJ", "ENTP", "INFJ", "INFP", "ENFJ", "ENFP", "ISTJ", "ISFJ", "ESTJ", "ESFJ", "ISTP", "ISFP", "ESTP", "ESFP"];
   const [name, setName] = useState('');
   // -------------------------
   const isValidTwitterUrl = (url) => {
     return /^https?:\/\/twitter\.com\/([a-zA-Z0-9_]+)$/.test(url);
   }
-  const isFormValid = () => {
-    return name && isValidTwitterUrl(twitterHandle) && telegramHandle;
-  }
+  const validateForm = () => {
+    if (
+      name.trim() !== "" &&
+      twitterHandle.trim() !== "" &&
+      telegramHandle.trim() !== "" &&
+      selectedPersonality !== ""
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [name, twitterHandle, telegramHandle, selectedPersonality]);
   // --------------------------- Blockchain
 
   const [client, setClient] = useState(null);
@@ -224,7 +238,7 @@ function ProfileCard() {
             <div className="mt-2">
               <input
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Enter your name (*)"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="form-input block w-full text-center"
@@ -244,7 +258,7 @@ function ProfileCard() {
               <div className="mt-4">
                 <input
                   type="text"
-                  placeholder="Twitter Handle"
+                  placeholder="Twitter Handle (URL only) (*)"
                   value={twitterHandle}
                   onChange={(e) => setTwitterHandle(e.target.value)}
                   className="form-input block w-full"
@@ -252,25 +266,31 @@ function ProfileCard() {
                 />
                 <input
                   type="text"
-                  placeholder="Telegram Handle"
+                  placeholder="Telegram Handle (*)"
                   value={telegramHandle}
                   onChange={(e) => setTelegramHandle(e.target.value)}
                   className="form-input block w-full mt-2"
                   required  // This field is required
                 />
-                <textarea placeholder="Your quote" value={quote} onChange={(e) => setQuote(e.target.value)} className="form-textarea block w-full mt-2" />
+                <textarea placeholder="Your Quote" value={quote} onChange={(e) => setQuote(e.target.value)} className="form-textarea block w-full mt-2" />
               </div>
-              <button
-                type="submit"
-                className="w-full py-3 mt-10 bg-indigo-600 text-white rounded-md focus:outline-none"
-                disabled={!isFormValid()}  // Button is disabled if the form is not valid
-                data-tip="Please fill in all required fields before you can mint the card."  // Tooltip text
+              
+              <div className="mt-4">
+        {!isFormValid && (
+          <p className="text-red-500">Please fill in all required fields before you can mint the card.</p>
+        )}
 
-              >
-                Mint Card
-              </button>
+        <button
+          type="submit"
+          className="w-full py-3 mt-10 bg-indigo-600 text-white rounded-md focus:outline-none"
+          disabled={!isFormValid}
+        >
+          Mint Card
+        </button>
+      </div>
 
             </div>
+            
           </div>
         </div></div></form>
   );
