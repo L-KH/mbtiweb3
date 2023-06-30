@@ -61,3 +61,20 @@
   .bg-esfp {
     background-color: #FFD700;
   }
+
+  .nav__brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-wrap: break-word; 
+  }
+  
+  .nav__brand h1 {
+    font-size: clamp(0.95em, 2vw, 1.2em);
+    font-family: Open Sans;
+  }
+  .nav__brand h1:hover {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+  

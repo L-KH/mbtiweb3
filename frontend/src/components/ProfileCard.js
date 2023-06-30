@@ -194,12 +194,12 @@ function ProfileCard() {
     <form onSubmit={handleSubmit}>
       <div className="flex justify-center items-center h-screen">
         <div className={`card max-w-lg w-full border border-gray-100 ${cardColor} transition-shadow shadow-xl hover:shadow-xl`}>
-          <div className="relative h-48">
+          <div className="relative h-48 ">
             <input
               type='file'
               accept='.jpg,.png,.gif'
               onChange={onImageChange(setCoverImage)}
-              className="opacity-0 w-full h-full absolute inset-0 z-50 cursor-pointer"
+              className="opacity-0 w-full h-full absolute inset-0 z-50 cursor-pointer "
             />
             {!coverImage &&
               <div className="absolute inset-0 flex items-center justify-center z-20 text-sm text-white bg-black bg-opacity-40">
@@ -207,10 +207,10 @@ function ProfileCard() {
               </div>
             }
             {coverImage &&
-              <div className="h-full w-full object-cover" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
+              <div className="h-full w-full object-cover " style={{ backgroundImage: `url(${coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
             }
             {!coverImage &&
-              <img src="https://image.freepik.com/free-vector/abstract-binary-code-techno-background_1048-12836.jpg" className="w-full h-full object-cover" alt="Cover" />
+              <img src="https://image.freepik.com/free-vector/abstract-binary-code-techno-background_1048-12836.jpg" className="w-full h-full object-cover " alt="Cover" />
             }
           </div>
 
@@ -223,7 +223,7 @@ function ProfileCard() {
                 className="opacity-0 w-full h-full absolute inset-0 z-50 cursor-pointer"
               />
               {!profileImage &&
-                <div className="absolute inset-0 flex items-center justify-center z-20 text-xs text-white bg-black bg-opacity-40">
+                <div className="absolute inset-0 flex items-center justify-center z-20 text-xs text-white bg-black bg-opacity-40 ">
                   Click to choose profile image
                 </div>
               }
@@ -231,7 +231,7 @@ function ProfileCard() {
                 <div className="h-full w-full rounded-full mx-auto shadow-xl" style={{ backgroundImage: `url(${profileImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
               }
               {!profileImage &&
-                <img src="https://avatars3.githubusercontent.com/u/11801238?v=4" className="h-full w-full rounded-full mx-auto shadow-xl" alt="Profile" />
+                <img src="https://avatars3.githubusercontent.com/u/11801238?v=4" className="h-full w-full rounded-full mx-auto shadow-xl " alt="Profile" />
               }
             </div>
 

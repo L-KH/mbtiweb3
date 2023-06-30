@@ -5,7 +5,6 @@ import {
   FolderIcon,
   HomeIcon,
   InboxIcon,
-  UsersIcon,
 } from '@heroicons/react/outline'
 import {
   TbBrandGithub,
@@ -13,6 +12,10 @@ import {
   TbBrandDiscord,
   TbBrandMedium,
 } from 'react-icons/tb'
+import {
+  LightningBoltIcon,
+  UsersIcon,
+} from '@heroicons/react/outline';
 
 interface INavigation {
   name: string
@@ -54,19 +57,19 @@ export function routeIsActive(pathname: String, route: INavigation): boolean {
 
 const navigation: INavigation[] = [
   { name: 'Dashboard', href: '/', icon: HomeIcon, current: true, exact: true },
-  {
-    name: 'Theme Preview',
-    href: '/themePreview',
-    icon: UsersIcon,
-    current: false,
-  },
-  { name: '404', href: '/404', icon: FolderIcon, current: false },
-  { name: '500', href: '/500', icon: CalendarIcon, current: false },
+  // {
+  //   name: 'Theme Preview',
+  //   href: '/themePreview',
+  //   icon: UsersIcon,
+  //   current: false,
+  // },
+  { name: 'Mint Your Identity', href: '/MintYourIdentity', icon: LightningBoltIcon, current: false },
+  { name: 'Community Wall', href: '/CommunityWall', icon: UsersIcon, current: false },
 ]
 
 const bottomNavigation: IBottomNavigation[] = [
-  { name: 'Docs', href: '#', icon: BookOpenIcon },
-  { name: 'Settings', href: '#', icon: CogIcon },
+  // { name: 'Docs', href: '#', icon: BookOpenIcon },
+  // { name: 'Settings', href: '#', icon: CogIcon },
 ]
 
 const bottomIcons: IBottomIcons[] = [
@@ -93,9 +96,9 @@ const bottomIcons: IBottomIcons[] = [
 ]
 
 const bottomDisclaimer: IBottomDisclaimer[] = [
-  { name: 'About', href: '#' },
-  { name: 'Privacy', href: '#' },
-  { name: 'Terms', href: '#' },
+  // { name: 'About', href: '#' },
+  // { name: 'Privacy', href: '#' },
+  // { name: 'Terms', href: '#' },
 ]
 
 export function updateCurrentItem(route: INavigation) {

@@ -21,86 +21,28 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex-grow items-center justify-center py-10 px-20 text-center">
-        <h1 className="my-12 text-6xl font-bold">
-          <span className="text-secondary">Web3</span> starter template
-        </h1>
+  <h1 className="my-12 text-6xl font-bold">
+    Welcome to <span className="text-secondary">PersonaChain</span>
+  </h1>
 
-        <div className="mx-auto max-w-xl">
-          <ul className="list-outside list-disc text-left text-xl">
-            <li>Only OpenSource libraries used</li>
-            <li>
-              <a
-                className="text-primary hover:underline"
-                href="https://nextjs.org"
-              >
-                NextJS
-              </a>{' '}
-              for fast server-rendered websites
-            </li>
-            <li>
-              <a
-                className="text-primary hover:underline"
-                href="https://hardhat.org/"
-              >
-                Hardhat
-              </a>{' '}
-              for Ethereum based smart contract development
-            </li>
-            <li>
-              <a
-                className="text-primary hover:underline"
-                href="https://tailwindcss.com/"
-              >
-                Tailwind CSS
-              </a>{' '}
-              for simple styling
-            </li>
-            <li>
-              <a
-                className="text-primary hover:underline"
-                href="https://daisyui.com/"
-              >
-                DaisyUI
-              </a>{' '}
-              component library and themeing system
-            </li>
-            <li>
-              Wallet connection with{' '}
-              <a
-                className="text-primary hover:underline"
-                href="https://www.rainbowkit.com/"
-              >
-                RainbowKit
-              </a>{' '}
-              with full DaisyUI themeing
-            </li>
-            <li>
-              <a
-                className="text-primary hover:underline"
-                href="https://wagmi.sh/"
-              >
-                Wagmi
-              </a>{' '}
-              React hooks for Ethereum
-            </li>
-          </ul>
-        </div>
+  <div className="mx-auto max-w-xl">
+    <p className="text-xl mb-4">
+      Explore the world of personalities, connect with others and create your unique digital identity. All on the blockchain.
+    </p>
 
-        <div className="m-12 flex-row gap-6">
-          <a
-            className="btn btn-secondary m-3"
-            href="https://github.com/JonnysCode/hardhat-nextjs-starter-dashboard"
-          >
-            Star it on GitHub
-          </a>
-          <div
-            className="btn btn-primary m-3"
-            onClick={() => sendTransaction()}
-          >
-            <p>Donate some ETH</p>
-          </div>
-        </div>
-      </main>
+    <ul className="list-outside list-disc text-left text-xl">
+      <li>Mint your unique personality NFT for <b>free</b></li>
+      <li>Find and connect with people who share your <b>MBTI</b> type</li>
+      <li>Secure and decentralized with <b>Web3</b> technology</li>
+      <li>Each user is allowed to mint one and only one <b>NFT</b></li>
+    </ul>
+
+    <p className="text-xl mt-4">
+      Start your journey by discovering your MBTI type or if you already know it, create your NFT now!
+    </p>
+  </div>
+</main>
+
     </Layout>
   )
 }
