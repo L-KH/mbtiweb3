@@ -87,19 +87,19 @@ const AllNFTs = () => {
 
   return (
 
-	<div className="flex flex-wrap justify-around">
+	<div className="flex flex-wrap justify-around gap-0.5">
   { nfts.filter(nft => nft && nft.image).map((nft, i) => {
   const personalityAttr = nft.attributes.find(attr => attr.trait_type === "MBTI Type");
   const color = personalityAttr ? cardColor[personalityAttr.value] : 'bg-purple-100';
   const textColor = isDark(color) ? 'text-white' : 'text-black';
   return (
-    <div key={i} className={`m-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5`}>
-      <div className={`card max-w-lg w-full border border-gray-100 ${color} ${textColor} transition-all duration-500 ease-in-out transform hover:scale-105 hover:shadow-glow`}>
+    <div key={i} className={`m-2 w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4`}> {/* Adjust the fractions in `w-...` and `m-...` to suit your needs */}
+    <div className={`card max-w-lg w-full border border-gray-100 ${color} ${textColor} transition-all duration-500 ease-in-out transform hover:scale-105 hover:shadow-glow`}>
         <div className="relative h-48">
           <img src={nft.cover_image || "https://image.freepik.com/free-vector/abstract-binary-code-techno-background_1048-12836.jpg"} className="w-full h-full object-cover" alt={nft.name} />
         </div>
         <div className="p-4">
-          <div className="relative w-24 h-24 mx-auto mb-4">
+        <div className="relative w-24 h-24 mx-auto mb-4 -mt-16">
             <img src={nft.image || "https://avatars3.githubusercontent.com/u/11801238?v=4"} className="h-full w-full rounded-full mx-auto shadow-xl" alt={nft.name} />
           </div>
           <div className="p-4 h-40 overflow-y-auto text-lg"> {/* Adjust this h-40 to the fixed height that suits your design */}
