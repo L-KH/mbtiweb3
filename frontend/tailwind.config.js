@@ -31,6 +31,10 @@ module.exports = {
       maxWidth: {
         '8xl': '88rem',
       },
+      boxShadow: {
+        'outline-glow': '0 0 0 3px rgba(156, 163, 175, .5)',
+        'glow': '0 0 10px 1px rgba(156, 163, 175, .5)',
+      },
     },
   },
 
