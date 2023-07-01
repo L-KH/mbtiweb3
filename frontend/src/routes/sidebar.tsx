@@ -65,6 +65,12 @@ const navigation: INavigation[] = [
   // },
   { name: 'Mint Your Identity', href: '/MintYourIdentity', icon: LightningBoltIcon, current: false },
   { name: 'Community Wall', href: '/CommunityWall', icon: UsersIcon, current: false },
+  {
+    name: 'Cover/Image Suggestions',
+    href: '/Gallery',
+    icon: BookOpenIcon,
+    current: false,
+  },
 ]
 
 const bottomNavigation: IBottomNavigation[] = [

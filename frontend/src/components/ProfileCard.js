@@ -11,6 +11,7 @@ import ReactTooltip from 'react-tooltip';  // Add this line
 
 function ProfileCard() {
   const [provider, setProvider] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedPersonality, setSelectedPersonality] = useState('');
   const [coverImage, setCoverImage] = useState('/default_cover.jpg');
@@ -89,61 +90,67 @@ function ProfileCard() {
       alert('Please enter a valid Twitter profile URL.');
       return;
     }
-    if (!isFormValid()) {
+    if (!isFormValid) {
       alert('Please fill in all required fields.');
       return;
     }
-    let coverImageBlob = await fetch(coverImage).then(r => r.blob());
-    let profileImageBlob = await fetch(profileImage).then(r => r.blob());
-    // Convert coverImage to IPFS URI
-    //let coverImageBlob = await fetch(coverImage).then(r => r.blob());
-    let coverImageCID = await client.storeBlob(coverImageBlob);
-    let coverImageURI = `https://ipfs.io/ipfs/${coverImageCID}`;
+    setIsLoading(true);
+    try {
+      let coverImageBlob = await fetch(coverImage).then(r => r.blob());
+      let profileImageBlob = await fetch(profileImage).then(r => r.blob());
+      // Convert coverImage to IPFS URI
+      //let coverImageBlob = await fetch(coverImage).then(r => r.blob());
+      let coverImageCID = await client.storeBlob(coverImageBlob);
+      let coverImageURI = `https://ipfs.io/ipfs/${coverImageCID}`;
 
-    // Convert profileImage to IPFS URI
-    //let profileImageBlob = await fetch(profileImage).then(r => r.blob());
-    let profileImageCID = await client.storeBlob(profileImageBlob);
-    let profileImageURI = `https://ipfs.io/ipfs/${profileImageCID}`;
-    // Add this line
+      // Convert profileImage to IPFS URI
+      //let profileImageBlob = await fetch(profileImage).then(r => r.blob());
+      let profileImageCID = await client.storeBlob(profileImageBlob);
+      let profileImageURI = `https://ipfs.io/ipfs/${profileImageCID}`;
+      // Add this line
 
 
-    let metadata = {
-      "name": name,
-      "description": "This is a short description of the NFT",
-      "image": profileImageURI,
-      "cover_image": coverImageURI,  // add this line
-      "attributes": [
-        {
-          "trait_type": "MBTI Type",
-          "value": selectedPersonality
-        },
-        {
-          "trait_type": "Twitter",
-          "value": twitterHandle
-        },
-        {
-          "trait_type": "Telegram",
-          "value": telegramHandle
-        },
-        {
-          "trait_type": "Quote",
-          "value": quote
-        }
-      ]
-    };
+      let metadata = {
+        "name": name,
+        "description": "This is a short description of the NFT",
+        "image": profileImageURI,
+        "cover_image": coverImageURI,  // add this line
+        "attributes": [
+          {
+            "trait_type": "MBTI Type",
+            "value": selectedPersonality
+          },
+          {
+            "trait_type": "Twitter",
+            "value": twitterHandle
+          },
+          {
+            "trait_type": "Telegram",
+            "value": telegramHandle
+          },
+          {
+            "trait_type": "Quote",
+            "value": quote
+          }
+        ]
 
-    console.log("lololol", selectedPersonality);
+      };
+      // Convert metadata to a Blob and then store it on IPFS
+      let metadataBlob = new Blob([JSON.stringify(metadata)], { type: 'application/json' });
+      let metadataCID = await client.storeBlob(metadataBlob);
+      let metadataURI = `https://ipfs.io/ipfs/${metadataCID}`;
 
-    // Convert metadata to a Blob and then store it on IPFS
-    let metadataBlob = new Blob([JSON.stringify(metadata)], { type: 'application/json' });
-    let metadataCID = await client.storeBlob(metadataBlob);
-    let metadataURI = `https://ipfs.io/ipfs/${metadataCID}`;
+      const signer = await provider.getSigner();
+      const address = await signer.getAddress();
 
-    const signer = await provider.getSigner();
-    const address = await signer.getAddress();
+      let tx = await MBTICard.connect(signer).mintCard(name, profileImageURI, coverImageURI, selectedPersonality, twitterHandle, telegramHandle, quote, metadataURI);
+      console.log("Transaction: ", tx);
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred during the minting process.');
+    }
+    setIsLoading(false);
 
-    let tx = await MBTICard.connect(signer).mintCard(name, profileImageURI, coverImageURI, selectedPersonality, twitterHandle, telegramHandle, quote, metadataURI);
-    console.log("Transaction: ", tx);
   }
 
 
@@ -274,23 +281,23 @@ function ProfileCard() {
                 />
                 <textarea placeholder="Your Quote" value={quote} onChange={(e) => setQuote(e.target.value)} className="form-textarea block w-full mt-2" />
               </div>
-              
-              <div className="mt-4">
-        {!isFormValid && (
-          <p className="text-red-500">Please fill in all required fields before you can mint the card.</p>
-        )}
 
-        <button
-          type="submit"
-          className="w-full py-3 mt-10 bg-indigo-600 text-white rounded-md focus:outline-none"
-          disabled={!isFormValid}
-        >
-          Mint Card
-        </button>
-      </div>
+              <div className="mt-4">
+                {!isFormValid && (
+                  <p className="text-red-500">Please fill in all required fields before you can mint the card.</p>
+                )}
+
+                <button
+                  type="submit"
+                  className="w-full py-3 mt-10 bg-indigo-600 text-white rounded-md focus:outline-none"
+                  disabled={!isFormValid || isLoading} // Disable button when loading
+                >
+                  {isLoading ? 'Loading...' : 'Mint Card'}
+                </button>
+              </div>
 
             </div>
-            
+
           </div>
         </div></div></form>
   );
