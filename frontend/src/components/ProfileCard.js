@@ -5,7 +5,8 @@ import { ethers } from 'ethers';
 import MBTICardABI from "../abis/MBTICard.json";
 import { wagmiClient } from './Layout/Web3Wrapper';
 import config from './config.json';
-import ReactTooltip from 'react-tooltip';  // Add this line
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -72,7 +73,7 @@ function ProfileCard() {
         });
       } catch (switchError) {
         console.error(switchError);
-        window.alert('Please connect to the network manually');
+        toast.error('Please connect to the network manually');
         return; // If the switch to Goerli failed, don't try to load the NFT contract
       }
     }
@@ -87,11 +88,11 @@ function ProfileCard() {
 
     event.preventDefault();
     if (!isValidTwitterUrl(twitterHandle)) {
-      alert('Please enter a valid Twitter profile URL.');
+      toast.error('Please enter a valid Twitter profile URL.');
       return;
     }
     if (!isFormValid) {
-      alert('Please fill in all required fields.');
+      toast.error('Please fill in all required fields.');
       return;
     }
     setIsLoading(true);
@@ -147,7 +148,7 @@ function ProfileCard() {
       console.log("Transaction: ", tx);
     } catch (error) {
       console.error(error);
-      alert('An error occurred during the minting process.');
+      toast.error('An error occurred during the minting process.');
     }
     setIsLoading(false);
 
@@ -299,7 +300,9 @@ function ProfileCard() {
             </div>
 
           </div>
-        </div></div></form>
+        </div></div>
+        <ToastContainer />
+        </form>
   );
 }
 
