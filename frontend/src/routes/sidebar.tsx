@@ -73,13 +73,14 @@ const navigation: INavigation[] = [
     icon: TemplateIcon,
     current: false,
   },
-  { name: 'Meme Competition', href: '/MemeCompetition', icon: UserGroupIcon , current: false },
+  
 
 ]
 
 const bottomNavigation: IBottomNavigation[] = [
   // { name: 'Docs', href: '#', icon: BookOpenIcon },
   // { name: 'Settings', href: '#', icon: CogIcon },
+  { name: 'Meme Competition', href: '/MemeCompetition', icon: UserGroupIcon , current: false },
 ]
 
 const bottomIcons: IBottomIcons[] = [
