@@ -132,7 +132,7 @@ const AllNFTs = () => {
                 <div className="relative w-24 h-24 mx-auto mb-4 -mt-16">
                   <img src={nft.image || "https://avatars3.githubusercontent.com/u/11801238?v=4"} className="h-full w-full rounded-full mx-auto shadow-xl" alt={nft.name} />
                 </div>
-                <div className="p-4 h-40 overflow-y-auto text-lg"> {/* Adjust this h-40 to the fixed height that suits your design */}
+                <div className="p-4 h-40 overflow-y-auto text-sm "> {/* Adjust this h-40 to the fixed height that suits your design */}
                   <p><b>Name:  </b> <span className="text-sm">{nft.name}</span></p>
                   {nft.attributes.map((attr, j) => {
                     if (attr.trait_type.toLowerCase() === "twitter" && attr.value) {
