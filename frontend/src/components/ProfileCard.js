@@ -7,6 +7,8 @@ import { wagmiClient } from './Layout/Web3Wrapper';
 import config from './config.json';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CameraIcon } from '@heroicons/react/outline';  // For heroicons
+import { TiCameraOutline } from 'react-icons/ti';  // For react-icons
 
 
 
@@ -15,8 +17,10 @@ function ProfileCard() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedPersonality, setSelectedPersonality] = useState('');
-  const [coverImage, setCoverImage] = useState('/default_cover.jpg');
-  const [profileImage, setProfileImage] = useState('/default_profile.jpg');
+  //const [coverImage, setCoverImage] = useState('/default_cover.jpg');
+  const [coverImage, setCoverImage] = useState(null);
+
+  const [profileImage, setProfileImage] = useState(null);
 
   const [twitterHandle, setTwitterHandle] = useState('');
   const [telegramHandle, setTelegramHandle] = useState('');
@@ -61,31 +65,31 @@ function ProfileCard() {
 
   const loadBlockchainData = async () => {
     try {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(provider);
-    const network = await provider.getNetwork();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(provider);
+      const network = await provider.getNetwork();
 
-    if (!allowedChains.includes(network.chainId)) {
-      const optimismChainId = '0x5';
-      try {
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: optimismChainId }],
-        });
-      } catch (switchError) {
-        console.error(switchError);
-        toast.error('Please connect to the network manually');
-        return; // If the switch to Goerli failed, don't try to load the NFT contract
+      if (!allowedChains.includes(network.chainId)) {
+        const optimismChainId = '0x5';
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: optimismChainId }],
+          });
+        } catch (switchError) {
+          console.error(switchError);
+          toast.error('Please connect to the network manually');
+          return; // If the switch to Goerli failed, don't try to load the NFT contract
+        }
       }
+      // Check the network again after attempting to switch
+      const switchedNetwork = await provider.getNetwork();
+      const nft = new ethers.Contract(config[switchedNetwork.chainId].nft.address, MBTICardABI, provider);
+      setMBTICard(nft);
+    } catch (error) {
+      console.error(error);
+      toast.error('Please connect to the network manually');
     }
-    // Check the network again after attempting to switch
-    const switchedNetwork = await provider.getNetwork();
-    const nft = new ethers.Contract(config[switchedNetwork.chainId].nft.address, MBTICardABI, provider);
-    setMBTICard(nft);
-  } catch (error) {
-    console.error(error);
-    toast.error('Please connect to the network manually');
-  }
   };
 
 
@@ -215,14 +219,16 @@ function ProfileCard() {
             />
             {!coverImage &&
               <div className="absolute inset-0 flex items-center justify-center z-20 text-sm text-white bg-black bg-opacity-40">
-                Click to choose cover image
+                <div className="flex items-center space-x-2">
+                  <CameraIcon className="h-6 w-6" />  {/* For heroicons */}
+                  <p>Click to choose cover image</p>
+                </div>
               </div>
             }
-            {coverImage &&
+            {coverImage ?
               <div className="h-full w-full object-cover " style={{ backgroundImage: `url(${coverImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
-            }
-            {!coverImage &&
-              <img src="https://image.freepik.com/free-vector/abstract-binary-code-techno-background_1048-12836.jpg" className="w-full h-full object-cover " alt="Cover" />
+              :
+              <img src="/default_cover.jpg" className="w-full h-full object-cover " alt="Cover" />
             }
           </div>
 
@@ -235,15 +241,16 @@ function ProfileCard() {
                 className="opacity-0 w-full h-full absolute inset-0 z-50 cursor-pointer"
               />
               {!profileImage &&
-                <div className="absolute inset-0 flex items-center justify-center z-20 text-xs text-white bg-black bg-opacity-40 ">
-                  Click to choose profile image
+                <div className="absolute inset-0 flex items-center justify-center z-20 text-sm text-white bg-black bg-opacity-20 rounded-full shadow-lg">
+                  <div className="flex items-center space-x-2">
+                    <CameraIcon className="h-6 w-6" />  {/* For heroicons */}
+                  </div>
                 </div>
               }
-              {profileImage &&
-                <div className="h-full w-full rounded-full mx-auto shadow-xl" style={{ backgroundImage: `url(${profileImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
-              }
-              {!profileImage &&
-                <img src="https://avatars3.githubusercontent.com/u/11801238?v=4" className="h-full w-full rounded-full mx-auto shadow-xl " alt="Profile" />
+              {profileImage ?
+                <div className="h-full w-full object-cover  rounded-full shadow-lg" style={{ backgroundImage: `url(${profileImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
+                :
+                <img src="/default_profile.jpg" className="w-full h-full object-cover rounded-full shadow-lg" alt="Profile" />
               }
             </div>
 
@@ -305,8 +312,8 @@ function ProfileCard() {
 
           </div>
         </div></div>
-        <ToastContainer />
-        </form>
+      <ToastContainer />
+    </form>
   );
 }
 

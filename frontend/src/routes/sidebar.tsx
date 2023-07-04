@@ -81,6 +81,7 @@ const bottomNavigation: IBottomNavigation[] = [
   // { name: 'Docs', href: '#', icon: BookOpenIcon },
   // { name: 'Settings', href: '#', icon: CogIcon },
   { name: 'Meme Competition', href: '/MemeCompetition', icon: UserGroupIcon },
+  { name: 'Special Edition NFTs', href: '/MemeCompetition', icon: FolderIcon },
 ]
 
 const bottomIcons: IBottomIcons[] = [
