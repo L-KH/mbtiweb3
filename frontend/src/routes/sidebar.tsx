@@ -86,22 +86,22 @@ const bottomNavigation: IBottomNavigation[] = [
 const bottomIcons: IBottomIcons[] = [
   {
     name: 'GitHub',
-    href: 'https://github.com/JonnysCode/hardhat-nextjs-starter-dashboard',
+    href: '#',
     icon: TbBrandGithub,
   },
   {
     name: 'Twitter',
-    href: 'https://github.com/JonnysCode/hardhat-nextjs-starter-dashboard',
+    href: 'https://twitter.com/PersonaChains',
     icon: TbBrandTwitter,
   },
   {
     name: 'Discord',
-    href: 'https://github.com/JonnysCode/hardhat-nextjs-starter-dashboard',
+    href: '#',
     icon: TbBrandDiscord,
   },
   {
     name: 'Medium',
-    href: 'https://github.com/JonnysCode/hardhat-nextjs-starter-dashboard',
+    href: '#',
     icon: TbBrandMedium,
   },
 ]
