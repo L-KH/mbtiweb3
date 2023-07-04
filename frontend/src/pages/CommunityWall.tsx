@@ -5,7 +5,7 @@ import AllNFTs from '../components/AllNFTs';
 const Page500: NextPage = () => {
   return (
     <Layout>
-      <div className="flex h-full content-center">
+      <div className="flex h-full content-center ">
       <AllNFTs />
       </div>
     </Layout>

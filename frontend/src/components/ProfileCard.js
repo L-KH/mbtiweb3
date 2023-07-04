@@ -60,6 +60,7 @@ function ProfileCard() {
   const allowedChains = [534353, 57000, 5, 10, 59140, 167005]; // Add more chain IDs as needed
 
   const loadBlockchainData = async () => {
+    try {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     setProvider(provider);
     const network = await provider.getNetwork();
@@ -81,6 +82,10 @@ function ProfileCard() {
     const switchedNetwork = await provider.getNetwork();
     const nft = new ethers.Contract(config[switchedNetwork.chainId].nft.address, MBTICardABI, provider);
     setMBTICard(nft);
+  } catch (error) {
+    console.error(error);
+    toast.error('Please connect to the network manually');
+  }
   };
 
 
@@ -145,10 +150,9 @@ function ProfileCard() {
       const address = await signer.getAddress();
 
       let tx = await MBTICard.connect(signer).mintCard(name, profileImageURI, coverImageURI, selectedPersonality, twitterHandle, telegramHandle, quote, metadataURI);
-      console.log("Transaction: ", tx);
     } catch (error) {
       console.error(error);
-      toast.error('An error occurred during the minting process.');
+      toast.error('An error occurred during the minting process. You cannot mint twice');
     }
     setIsLoading(false);
 

@@ -5,6 +5,8 @@ import {
   FolderIcon,
   HomeIcon,
   InboxIcon,
+  UserGroupIcon,
+  TemplateIcon ,
 } from '@heroicons/react/outline'
 import {
   TbBrandGithub,
@@ -68,9 +70,11 @@ const navigation: INavigation[] = [
   {
     name: 'Cover/Image Suggestions',
     href: '/Gallery',
-    icon: BookOpenIcon,
+    icon: TemplateIcon,
     current: false,
   },
+  { name: 'Meme Competition', href: '/MemeCompetition', icon: UserGroupIcon , current: false },
+
 ]
 
 const bottomNavigation: IBottomNavigation[] = [

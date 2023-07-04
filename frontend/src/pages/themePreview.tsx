@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout/Layout'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import MemeUpload from '../components/MemeUpload';
 
 const items = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
@@ -126,8 +127,11 @@ const ThemePreview: NextPage = () => {
 
           <div className="card h-48 bg-base-100 shadow-xl"></div>
         </div>
+        
       </main>
+      <MemeUpload />
     </Layout>
+    
   )
 }
 

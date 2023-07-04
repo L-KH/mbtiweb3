@@ -10,11 +10,11 @@ import styles from '@/styles/Gallery.module.css';
 const imageNames = [
   {type: "enfp", images: ["enfp", "enfp1", "enfp2","enfp3", "enfp4", "enfp5","enfp6","enfp7"]},
   {type: "intj", images: ["intj", "intj1", "intj2","intj3","intj4","intj5","intj6"]},
-  {type: "enfj", images: ["enfj", "enfj1", "enfj2","enfj3","enfj4","enfj5","enfj6","enfj7"]},
+  {type: "enfj", images: ["enfj", "enfj1", "enfj2","enfj3","enfj4","enfj5","enfj6"]},
   {type: "entp", images: ["entp", "entp1", "entp2","entp3","entp4","entp5"]},
   {type: "entj", images: ["entj", "entj1", "entj2","entj3","entj4","entj5","entj6"]},
   {type: "istj", images: ["istj", "istj1", "istj2","istj3","istj4","istj5","istj6","istj7"]},
-  {type: "istp", images: ["istp", "istp1", "istp2","istp3","istp4","istp5","istp6","istp7","istp8"]},
+  {type: "istp", images: ["istp", "istp1", "istp2","istp3","istp4","istp5","istp6","istp7"]},
   {type: "isfp", images: ["isfp", "isfp1", "isfp2","isfp3","isfp4","isfp5"]},
   {type: "esfp", images: ["estp", "estp1", "estp2","estp3","estp4","estp5"]},
   {type: "estj", images: ["estj", "estj1", "estj2","estj3","estj4","estj5"]},
@@ -44,12 +44,21 @@ const Gallery = () => {
   }
 
   return (
+    
     <Layout>
       <Head>
         <title>Gallery Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
+      <a
+        className="card flex-1 items-center justify-center bg-info  hover:bg-success mb-7"
+        onClick={() => window.open('https://forms.gle/zWkFEqEVWdSpRZYn7', '_blank')}
+        style={{ cursor: 'pointer' }}
+      >
+        <h3 className="text-center text-info-content text-xl">Join the PersonaChain community in showcasing your artistic abilities</h3>
+        <p className="text-center text-info-content text-sm">Fill out the form by clicking here</p>
+      </a>
       <div className={styles.gallery}>
       {imageNames.map((section, i: number) => (
         <>

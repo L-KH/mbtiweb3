@@ -78,3 +78,22 @@
     animation: gradient 3s ease infinite;
   }
   
+
+  .rainbow-background {
+
+    background: linear-gradient(to right,black, red, orange, yellow, green, blue, indigo, violet, white);
+    background-size: 1400% 100%;
+    animation: rainbow 10s linear infinite;
+  }
+  
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
