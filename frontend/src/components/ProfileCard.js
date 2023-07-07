@@ -8,7 +8,7 @@ import config from './config.json';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CameraIcon } from '@heroicons/react/outline';  // For heroicons
-import { TiCameraOutline } from 'react-icons/ti';  // For react-icons
+
 
 
 
@@ -61,7 +61,7 @@ function ProfileCard() {
     // Perform actions when the account changes
     loadBlockchainData()
   }
-  const allowedChains = [534353, 57000, 5, 10, 59140, 167005]; // Add more chain IDs as needed
+  const allowedChains = [534353, 57000, 5, 10, 59140, 167005, 59140 ]; // Add more chain IDs as needed
 
   const loadBlockchainData = async () => {
     try {
@@ -70,7 +70,7 @@ function ProfileCard() {
       const network = await provider.getNetwork();
 
       if (!allowedChains.includes(network.chainId)) {
-        const optimismChainId = '0x5';
+        const optimismChainId = '0xe704';
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
