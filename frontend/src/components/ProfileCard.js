@@ -61,7 +61,7 @@ function ProfileCard() {
     // Perform actions when the account changes
     loadBlockchainData()
   }
-  const allowedChains = [534353, 57000, 5, 10, 59140, 167005, 59140 ]; // Add more chain IDs as needed
+  const allowedChains = [534353, 57000, 5, 10, 59140, 167005, 59140, 59144 ]; // Add more chain IDs as needed
 
   const loadBlockchainData = async () => {
     try {

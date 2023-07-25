@@ -62,20 +62,20 @@ const { chains, provider } = configureChains(
     //   },
       
     // },
-//     {
-//       id: 5,
-//       name: 'Goerli Testnet',
-//       network: 'Goerli Testnet',
-//       nativeCurrency: {
-//         decimals: 18,
-//         name: 'Goerli Testnet',
-//         symbol: 'ETH',
-//       },
-//       rpcUrls: {
-//         default: 'https://eth-goerli.g.alchemy.com/v2/9rRR7mdpHignniSvCq9lz1LmJirbXUNo',
-//       },
+    {
+      id: 59144,
+      name: 'Linea Mainnet',
+      network: 'Linea Mainnet',
+      nativeCurrency: {
+        decimals: 18,
+        name: 'Linea Mainnet',
+        symbol: 'ETH',
+      },
+      rpcUrls: {
+        default: 'https://linea-mainnet.infura.io/v3/785f7bb2ad57482d9e033f63e08d24a3',
+      },
       
-//  },
+ },
     
     {
       id: 59140,

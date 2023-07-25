@@ -139,7 +139,7 @@ const AllNFTs = () => {
                       return (
                         <p key={j} className="text-left overflow-ellipsis overflow-hidden">
                           <b>{attr.trait_type}: </b>
-                          <a href={`https://twitter.com/${attr.value}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">{attr.value}</a>
+                          <a href={`${attr.value}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm">{attr.value}</a>
                         </p>
                       )
                     } else {
