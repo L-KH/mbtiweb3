@@ -330,7 +330,7 @@ const progressBarFillDynamicStyles = {
               }
             </div>
             <div className="mt-4 text-center">
-            <h4>Get Your Score</h4>
+            <h4>Get Your Gitcoin Passport Score</h4>
             <button 
                 type="button" 
                 className="px-4 py-2 bg-blue-500 text-white rounded shadow-lg hover:bg-blue-600 transition-colors duration-300"
