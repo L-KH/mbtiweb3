@@ -73,7 +73,8 @@ const navigation: INavigation[] = [
     icon: TemplateIcon,
     current: false,
   },
-  
+  { name: 'Twitter Callback', href: '/TwitterCallback', current: false }
+
 
 ]
 

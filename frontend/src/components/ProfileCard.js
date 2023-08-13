@@ -376,6 +376,7 @@ const progressBarFillDynamicStyles = {
                 authCallback={authHandler}
                 consumerKey={"ADzbW3yj2ww2hjE4ydb8QbeAk"}
                 consumerSecret={"n0kAZf6N5Z3W1v17GYcdSEY5azYXkNPfOPAAhHyKVT5ztWBlXZ"}
+                callbackUrl="https://www.personachain.xyz/TwitterCallback"
                 buttonText="Connect Twitter"
               />
               {twitterHandle && <p>Connected as: @{twitterHandle}</p>}
