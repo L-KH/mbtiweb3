@@ -375,7 +375,7 @@ const progressBarFillDynamicStyles = {
               <TwitterLogin
                 authCallback={authHandler}
                 consumerKey={"7ZjQyjUprpjiTxJcZ0iOAJ9Gw"}
-                consumerSecret={"DTxUe8nofCD2w8m06Q46Ylhy4irwbHGtI0zln2qlMTpoovOgnX"}
+                consumerSecret={"3V8CS0bAwYbdbw66v2ged7MkcbqzrKVQo78Z_RZhsBUuJpRkr-"}
                 buttonText="Connect Twitter"
               />
               {twitterHandle && <p>Connected as: @{twitterHandle}</p>}
