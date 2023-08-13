@@ -8,6 +8,9 @@ import config from './config.json';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CameraIcon } from '@heroicons/react/outline';  // For heroicons
+import { CircularProgress } from '@mui/material';
+import TwitterLogin from 'react-twitter-login';
+
 
 
 
@@ -15,8 +18,13 @@ import { CameraIcon } from '@heroicons/react/outline';  // For heroicons
 function ProfileCard() {
   const [provider, setProvider] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
-
+  const [score, setScore] = useState(null);
+  const endpoint = "https://api.scorer.gitcoin.co";
+    const SCORER_ID = "4939";
+    const API_KEY = "ixWOGoSs.Li6dUUSG0Cilq4uGSt4tF1pxLedCigvu";
+    const [scoreStatus, setScoreStatus] = useState('');
   const [selectedPersonality, setSelectedPersonality] = useState('');
+  const [isLoadingScore, setIsLoadingScore] = useState(false); // State to determine if score is being loaded
   //const [coverImage, setCoverImage] = useState('/default_cover.jpg');
   const [coverImage, setCoverImage] = useState(null);
 
@@ -38,7 +46,7 @@ function ProfileCard() {
   const validateForm = () => {
     if (
       name.trim() !== "" &&
-      twitterHandle.trim() !== "" &&
+      twitterHandle.trim() !== "" &&  // Just check if it's not empty
       telegramHandle.trim() !== "" &&
       selectedPersonality !== ""
     ) {
@@ -47,16 +55,77 @@ function ProfileCard() {
       setIsFormValid(false);
     }
   };
+  
 
   useEffect(() => {
     validateForm();
   }, [name, twitterHandle, telegramHandle, selectedPersonality]);
+  //-------------------------------
+  const handleScoringWithoutSignature = async () => {
+    setIsLoadingScore(true); // Set loading to true
+
+    if (!provider) {
+        toast.error('Please connect your wallet first.');
+        return;
+    }
+
+    const accounts = await provider.listAccounts();
+    const address = accounts[0];
+
+    try {
+        const response = await fetch(
+            `${endpoint}/registry/submit-passport`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-API-Key": API_KEY,
+                },
+                body: JSON.stringify({
+                    address: address,
+                    community: SCORER_ID,
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        if (data && data.status === "DONE") {
+            setScoreStatus(`Your score is: ${data.score}`);
+        } else {
+            setScoreStatus(data.error || 'Error fetching score');
+        }
+    } catch (error) {
+        toast.error('An error occurred while checking the score.');
+    }
+    setIsLoadingScore(false); // Set loading to false at the end
+
+};
+const determineProgressBarColor = (percentage) => {
+  if (percentage <= 25) return 'red';
+  if (percentage <= 50) return 'orange';
+  if (percentage <= 75) return 'yellowgreen';
+  return 'green';
+}
+const percentage = Math.min((score / 60) * 100, 100); // Ensuring it doesn't exceed 100%
+const progressBarFillColor = determineProgressBarColor(percentage);
+
+const progressBarFillDynamicStyles = {
+  width: `${percentage}%`,
+  backgroundColor: progressBarFillColor,
+}
+
   // --------------------------- Blockchain
 
   const [client, setClient] = useState(null);
   useEffect(() => {
     setClient(new NFTStorage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGFjYTU2MTcxQUI5MkRmOGMzNjM0MzRlODcyOUJkZWNDNzhGOEMwRTIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY4MjExNjY5NTg5NSwibmFtZSI6Im5mdCJ9.roO9LrntQk8MkfN0CVZE1lw99t4mjb6MCGPkAw7TCt0' }));
   }, []);
+  useEffect(() => {
+    if(score !== null) {
+        setScoreStatus(`Your score is: ${score}`);
+    }
+  }, [score]);
   const handleAccountChange = (newChain) => {
     // Perform actions when the account changes
     loadBlockchainData()
@@ -161,7 +230,14 @@ function ProfileCard() {
     setIsLoading(false);
 
   }
-
+  const authHandler = (err, data) => {
+    if (!err) {
+      setTwitterHandle(data.screen_name);
+    } else {
+      console.error(err);
+      toast.error('Twitter authentication failed.');
+    }
+  };
 
 
 
@@ -253,7 +329,28 @@ function ProfileCard() {
                 <img src="/default_profile.jpg" className="w-full h-full object-cover rounded-full shadow-lg" alt="Profile" />
               }
             </div>
+            <div className="mt-4 text-center">
+            <h4>Get Your Score</h4>
+            <button 
+                type="button" 
+                className="px-4 py-2 bg-blue-500 text-white rounded shadow-lg hover:bg-blue-600 transition-colors duration-300"
+                onClick={handleScoringWithoutSignature}
+                disabled={isLoadingScore} // Disable the button while loading
+            >
+                { isLoadingScore ? 'Loading...' : 'Check Score' }
+            </button>
 
+            { isLoadingScore ? <CircularProgress className="mt-4" /> : <div className="mt-4 text-2xl font-bold">{scoreStatus}</div> }
+        </div>
+        {score !== null && (
+          <>
+            <div className="progressBar mt-4">
+              <div className="progressBarFill" style={{...progressBarFillDynamicStyles}}>
+                {score}
+              </div>
+            </div>
+          </>
+        )}
             <div className="mt-2">
               <input
                 type="text"
@@ -275,14 +372,14 @@ function ProfileCard() {
               </div>
 
               <div className="mt-4">
-                <input
-                  type="text"
-                  placeholder="Twitter Handle (URL only) (*)"
-                  value={twitterHandle}
-                  onChange={(e) => setTwitterHandle(e.target.value)}
-                  className="form-input block w-full"
-                  required  // This field is required
-                />
+              <TwitterLogin
+                authCallback={authHandler}
+                consumerKey={"7ZjQyjUprpjiTxJcZ0iOAJ9Gw"}
+                consumerSecret={"DTxUe8nofCD2w8m06Q46Ylhy4irwbHGtI0zln2qlMTpoovOgnX"}
+                buttonText="Connect Twitter"
+              />
+              {twitterHandle && <p>Connected as: @{twitterHandle}</p>}
+
                 <input
                   type="text"
                   placeholder="Telegram Handle (*)"
