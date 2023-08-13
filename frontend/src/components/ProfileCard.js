@@ -230,32 +230,16 @@ const progressBarFillDynamicStyles = {
     setIsLoading(false);
 
   }
-
-  const handleTwitterLogin = () => {
-    // Open the Twitter OAuth URL in a popup
-    const popup = window.open(
-      '/path-to-twitter-auth', 
-      'twitter-auth', 
-      'height=600,width=800'
-    );
-  
-    // Listen for the popup to send data back
-    window.addEventListener('message', (event) => {
-      if (event.origin !== window.location.origin) return;  // Check the origin for security reasons
-      const { username } = event.data;
-      setTwitterHandle(username);
-      popup.close();
-    });
-  }
-  
   const authHandler = (err, data) => {
     if (!err) {
-      setTwitterHandle(data.screen_name); // Setting the Twitter handle on successful authorization
+      setTwitterHandle(data.screen_name);
     } else {
       console.error(err);
       toast.error('Twitter authentication failed.');
     }
   };
+
+
 
 
   const onCoverImageChange = (event) => {
@@ -388,16 +372,14 @@ const progressBarFillDynamicStyles = {
               </div>
 
               <div className="mt-4">
-              
- <div className="mt-4">
-        <TwitterLogin
-          authCallback={authHandler}
-          consumerKey={"mZAdBl1sIkw8KsgMNCv2UigT4"}
-          consumerSecret={"oDE6toCJx6URk1iz7tyLE6zrHOW6EHMzMuZZPJ7ueY2Di21u8Q"}
-          buttonText="Connect Twitter"
-        />
-        {twitterHandle && <p>Connected as: @{twitterHandle}</p>}
-      </div>
+              <TwitterLogin
+                authCallback={authHandler}
+                consumerKey={"ADzbW3yj2ww2hjE4ydb8QbeAk"}
+                consumerSecret={"n0kAZf6N5Z3W1v17GYcdSEY5azYXkNPfOPAAhHyKVT5ztWBlXZ"}
+                buttonText="Connect Twitter"
+              />
+              {twitterHandle && <p>Connected as: @{twitterHandle}</p>}
+
                 <input
                   type="text"
                   placeholder="Telegram Handle (*)"
