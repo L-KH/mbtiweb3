@@ -372,7 +372,14 @@ const progressBarFillDynamicStyles = {
               </div>
 
               <div className="mt-4">
-
+              <input
+                  type="text"
+                  placeholder="Twitter Handle (URL only) (*)"
+                  value={twitterHandle}
+                  onChange={(e) => setTwitterHandle(e.target.value)}
+                  className="form-input block w-full"
+                  required  // This field is required
+                />
                 <input
                   type="text"
                   placeholder="Telegram Handle (*)"
