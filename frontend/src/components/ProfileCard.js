@@ -139,7 +139,7 @@ const progressBarFillDynamicStyles = {
       const network = await provider.getNetwork();
 
       if (!allowedChains.includes(network.chainId)) {
-        const optimismChainId = '0xe704';
+        const optimismChainId = '0xa';
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',

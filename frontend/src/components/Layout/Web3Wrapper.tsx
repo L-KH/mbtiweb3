@@ -9,19 +9,19 @@ const { chains, provider } = configureChains(
   // add any chain you want if its a new chain add chain info 
   // const { chains, provider } = configureChains(
     [
-      // {
-      //   id: 10,
-      //   name: 'Optimism',
-      //   network: 'Optimism Collective',
-      //   nativeCurrency: {
-      //     decimals: 18,
-      //     name: 'Optimism Collective',
-      //     symbol: 'ETH',
-      //   },
-      //   rpcUrls: {
-      //     default: 'https://optimism.meowrpc.com/',
-      //   },
-      // },
+      {
+        id: 10,
+        name: 'Optimism',
+        network: 'Optimism Collective',
+        nativeCurrency: {
+          decimals: 18,
+          name: 'Optimism Collective',
+          symbol: 'ETH',
+        },
+        rpcUrls: {
+          default: 'https://optimism.meowrpc.com/',
+        },
+      },
     //   {
     //     id: 534353,
     //     name: 'Scroll Testnet',
