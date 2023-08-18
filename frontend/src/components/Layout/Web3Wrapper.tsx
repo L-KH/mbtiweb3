@@ -9,19 +9,19 @@ const { chains, provider } = configureChains(
   // add any chain you want if its a new chain add chain info 
   // const { chains, provider } = configureChains(
     [
-      {
-        id: 10,
-        name: 'Optimism',
-        network: 'Optimism Collective',
-        nativeCurrency: {
-          decimals: 18,
-          name: 'Optimism Collective',
-          symbol: 'ETH',
-        },
-        rpcUrls: {
-          default: 'https://optimism.meowrpc.com/',
-        },
-      },
+      // {
+      //   id: 10,
+      //   name: 'Optimism',
+      //   network: 'Optimism Collective',
+      //   nativeCurrency: {
+      //     decimals: 18,
+      //     name: 'Optimism Collective',
+      //     symbol: 'ETH',
+      //   },
+      //   rpcUrls: {
+      //     default: 'https://optimism.meowrpc.com/',
+      //   },
+      // },
     //   {
     //     id: 534353,
     //     name: 'Scroll Testnet',
@@ -62,21 +62,34 @@ const { chains, provider } = configureChains(
     //   },
       
     // },
-    {
-      id: 59144,
-      name: 'Linea Mainnet',
-      network: 'Linea Mainnet',
-      nativeCurrency: {
-        decimals: 18,
-        name: 'Linea Mainnet',
-        symbol: 'ETH',
-      },
-      rpcUrls: {
-        default: 'https://linea-mainnet.infura.io/v3/785f7bb2ad57482d9e033f63e08d24a3',
-      },
+    // {
+    //   id: 59144,
+    //   name: 'Linea Mainnet',
+    //   network: 'Linea Mainnet',
+    //   nativeCurrency: {
+    //     decimals: 18,
+    //     name: 'Linea Mainnet',
+    //     symbol: 'ETH',
+    //   },
+    //   rpcUrls: {
+    //     default: 'https://linea-mainnet.infura.io/v3/785f7bb2ad57482d9e033f63e08d24a3',
+    //   },
       
- },
-    
+//  },
+// {
+//   id: 11155111,
+//   name: 'Sepolia Testnet',
+//   network: 'Sepolia Testnet',
+//   nativeCurrency: {
+//     decimals: 18,
+//     name: 'Sepolia Testnet',
+//     symbol: 'ETH',
+//   },
+//   rpcUrls: {
+//     default: 'https://sepolia.infura.io/v3/',
+//   },
+  
+// },
     {
       id: 59140,
       name: 'Linea Testnet',
@@ -91,6 +104,7 @@ const { chains, provider } = configureChains(
       },
       
    }
+   
     ],
     
   //   [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]

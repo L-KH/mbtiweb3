@@ -3,22 +3,17 @@ import { NFTStorage, File } from 'nft.storage';
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import MBTICardABI from "../abis/MBTICard.json";
-import { wagmiClient } from './Layout/Web3Wrapper';
 import config from './config.json';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CameraIcon } from '@heroicons/react/outline';  // For heroicons
 import { CircularProgress } from '@mui/material';
-import TwitterLogin from 'react-twitter-login';
-
-
-
-
 
 function ProfileCard() {
   const [provider, setProvider] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const [score, setScore] = useState(null);
+  const [gitcoinScore, setGitcoinScore] = useState('');
   const endpoint = "https://api.scorer.gitcoin.co";
     const SCORER_ID = "4939";
     const API_KEY = "ixWOGoSs.Li6dUUSG0Cilq4uGSt4tF1pxLedCigvu";
@@ -46,8 +41,9 @@ function ProfileCard() {
   const validateForm = () => {
     if (
       name.trim() !== "" &&
-      twitterHandle.trim() !== "" &&  // Just check if it's not empty
+      twitterHandle.trim() !== "" &&
       telegramHandle.trim() !== "" &&
+      gitcoinScore !== "" &&  // Check the Gitcoin score
       selectedPersonality !== ""
     ) {
       setIsFormValid(true);
@@ -55,11 +51,13 @@ function ProfileCard() {
       setIsFormValid(false);
     }
   };
+
   
 
   useEffect(() => {
     validateForm();
-  }, [name, twitterHandle, telegramHandle, selectedPersonality]);
+  }, [name, twitterHandle, telegramHandle, gitcoinScore, selectedPersonality]);  // Add gitcoinScore
+
   //-------------------------------
   const handleScoringWithoutSignature = async () => {
     setIsLoadingScore(true); // Set loading to true
@@ -91,10 +89,14 @@ function ProfileCard() {
         const data = await response.json();
 
         if (data && data.status === "DONE") {
-            setScoreStatus(`Your score is: ${data.score}`);
+           // Save the score in the state
+          let gitcoinScoreInt = parseInt(data.score);
+          setGitcoinScore(gitcoinScoreInt); 
+          setScoreStatus(`Your score is: ${data.score}`);
         } else {
             setScoreStatus(data.error || 'Error fetching score');
         }
+      
     } catch (error) {
         toast.error('An error occurred while checking the score.');
     }
@@ -130,7 +132,8 @@ const progressBarFillDynamicStyles = {
     // Perform actions when the account changes
     loadBlockchainData()
   }
-  const allowedChains = [534353, 57000, 5, 10, 59140, 167005, 59140, 59144 ]; // Add more chain IDs as needed
+  //const allowedChains = [534353, 57000, 5, 10, 11155111, 167005, 59140, 59144 ]; // Add more chain IDs as needed
+  const allowedChains = [11155111,  59140]; // Add more chain IDs as needed
 
   const loadBlockchainData = async () => {
     try {
@@ -139,7 +142,7 @@ const progressBarFillDynamicStyles = {
       const network = await provider.getNetwork();
 
       if (!allowedChains.includes(network.chainId)) {
-        const optimismChainId = '0xa';
+        const optimismChainId = '0xe704';
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
@@ -175,8 +178,10 @@ const progressBarFillDynamicStyles = {
     }
     setIsLoading(true);
     try {
-      let coverImageBlob = await fetch(coverImage).then(r => r.blob());
-      let profileImageBlob = await fetch(profileImage).then(r => r.blob());
+      let coverImageToUpload = coverImage || '/default_cover.jpg';
+      let profileImageToUpload = profileImage || '/default_profile.jpg';
+      let coverImageBlob = await fetch(coverImageToUpload).then(r => r.blob());
+      let profileImageBlob = await fetch(profileImageToUpload).then(r => r.blob());
       // Convert coverImage to IPFS URI
       //let coverImageBlob = await fetch(coverImage).then(r => r.blob());
       let coverImageCID = await client.storeBlob(coverImageBlob);
@@ -187,8 +192,6 @@ const progressBarFillDynamicStyles = {
       let profileImageCID = await client.storeBlob(profileImageBlob);
       let profileImageURI = `https://ipfs.io/ipfs/${profileImageCID}`;
       // Add this line
-
-
       let metadata = {
         "name": name,
         "description": "This is a short description of the NFT",
@@ -208,6 +211,10 @@ const progressBarFillDynamicStyles = {
             "value": telegramHandle
           },
           {
+            "trait_type": "Gitcoin Score",
+            "value": gitcoinScore  // Add the Gitcoin score
+          },
+          {
             "trait_type": "Quote",
             "value": quote
           }
@@ -222,7 +229,7 @@ const progressBarFillDynamicStyles = {
       const signer = await provider.getSigner();
       const address = await signer.getAddress();
 
-      let tx = await MBTICard.connect(signer).mintCard(name, profileImageURI, coverImageURI, selectedPersonality, twitterHandle, telegramHandle, quote, metadataURI);
+      let tx = await MBTICard.connect(signer).mintCard(name, profileImageURI, coverImageURI, selectedPersonality, twitterHandle, telegramHandle, quote, gitcoinScore, metadataURI);
     } catch (error) {
       console.error(error);
       toast.error('An error occurred during the minting process. You cannot mint twice');
@@ -306,6 +313,7 @@ const progressBarFillDynamicStyles = {
               :
               <img src="/default_cover.jpg" className="w-full h-full object-cover " alt="Cover" />
             }
+
           </div>
 
           <div className="p-4">
@@ -324,10 +332,11 @@ const progressBarFillDynamicStyles = {
                 </div>
               }
               {profileImage ?
-                <div className="h-full w-full object-cover  rounded-full shadow-lg" style={{ backgroundImage: `url(${profileImage})`, backgroundSize: 'cover', backgroundPosition: 'center center' }}></div>
+                <img src={profileImage} className="w-24 h-24 rounded-full" alt="Profile" />
                 :
-                <img src="/default_profile.jpg" className="w-full h-full object-cover rounded-full shadow-lg" alt="Profile" />
+                <img src="/default_profile.jpg" className="w-24 h-24 rounded-full" alt="Profile" />
               }
+
             </div>
             <div className="mt-4 text-center">
             <h4>Get Your Gitcoin Passport Score</h4>
